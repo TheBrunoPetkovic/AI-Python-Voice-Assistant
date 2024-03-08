@@ -31,43 +31,6 @@
        "responses": ["Happy to help!", "Any time!", "My pleasure"]
      },
      {
-       "tag": "items",
-       "patterns": [
-         "Which items do you have?",
-         "What kinds of items are there?",
-         "What do you sell?"
-       ],
-       "responses": [
-         "We sell coffee and tea",
-         "We have coffee and tea"
-       ]
-     },
-     {
-       "tag": "payments",
-       "patterns": [
-         "Do you take credit cards?",
-         "Do you accept Mastercard?",
-         "Can I pay with Paypal?",
-         "Are you cash only?"
-       ],
-       "responses": [
-         "We accept VISA, Mastercard and Paypal",
-         "We accept most major credit cards, and Paypal"
-       ]
-     },
-     {
-       "tag": "delivery",
-       "patterns": [
-         "How long does delivery take?",
-         "How long does shipping take?",
-         "When do I get my delivery?"
-       ],
-       "responses": [
-         "Delivery takes 2-4 days",
-         "Shipping takes 2-4 days"
-       ]
-     },
-     {
        "tag": "funny",
        "patterns": [
          "Tell me a joke!",
@@ -75,8 +38,16 @@
          "Do you know a joke?"
        ],
        "responses": [
-         "Why did the hipster burn his mouth? He drank the coffee before it was cool.",
-         "What did the buffalo say when his son left for college? Bison."
+         "Why don't scientists trust atoms? Because they make up everything!",
+         "What did the buffalo say when his son left for college? Bison.",
+         "I'm reading a book on anti-gravity. It's impossible to put down!",
+         "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+         "Why don't skeletons fight each other? They don't have the guts.",
+         "Parallel lines have so much in common. It's a shame they'll never meet.",
+         "I used to be a baker, but I couldn't make enough dough.",
+         "What do you call fake spaghetti? An impasta.",
+         "I'm trying to organize a hide and seek tournament, but it's hard to find good players.",
+         "What do you get when you cross a snowman and a vampire? Frostbite."
        ]
      }
    ]
