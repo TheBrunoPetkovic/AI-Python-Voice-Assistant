@@ -107,7 +107,7 @@ def main():
          for intent in intents["intents"]:
             if tag == intent["tag"]:
                random_choice = random.choice(intent['responses'])
-               if random_choice == "":
+               if random_choice != "none":
                   print(f"{bot_name}: {random_choice}")
                   speak(random_choice)
          if tag == "goodbye":
