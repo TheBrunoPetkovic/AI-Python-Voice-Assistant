@@ -26,6 +26,40 @@
        ]
      },
      {
+      "tag": "tell-current-time",
+      "patterns": [
+         "Can you tell me the time",
+         "Can you tell me the current time",
+         "Tell me the time",
+         "Tell me the current time",
+         "What time is it" 
+      ],
+      "responses": ["none"]
+     },
+     {
+      "tag": "day_of_week",
+      "patterns": [
+         "Can you tell me what day it is",
+         "Can you tell me the current day of the week",
+         "Tell me the day of the week today",
+         "Tell me the what day is it today",
+         "What day is it today" 
+      ],
+      "responses": ["none"]
+     },
+     {
+      "tag": "current_date",
+      "patterns": [
+         "Can you tell me what date it is",
+         "Can you tell me the date",
+         "Tell me the date today",
+         "Tell me the whay date is it today",
+         "What date is it today",
+         "What is the date"
+      ],
+      "responses": ["none"]
+     },
+     {
        "tag": "thanks",
        "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!"],
        "responses": ["Happy to help!", "Any time!", "My pleasure"]
