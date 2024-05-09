@@ -67,12 +67,13 @@
      {
       "tag": "mathematical_expression",
       "patterns": [
-        "What is five plus two",
-        "What is five minus two",
-        "What is five times two",
-        "What is five devided by two",
-        "What is three plus one",
-        "What is seven plus four"
+        "What is 5 + 2",
+        "What is 5 - 2",
+        "What is 5 x 2",
+        "What is 5 / 2",
+        "What is 3 + 1",
+        "What is 7 + 4",
+        "Calculate this 4 + 3"
       ],
       "responses": [
         "I'm calculating..."

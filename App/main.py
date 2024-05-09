@@ -61,27 +61,31 @@ def tell_current_date():
    
 # Funkcija za pretvaranje teksta u matematicki izraz
 def text_to_expression(text):
-   pattern = r'(\d+|\+|\-|\*|\/)'
-   tokens = re.findall(pattern, text)
+   list_of_words = []
+   math_operations = {"+", "-", "x", "/"}
+   expression = ""
+   for item in text:
+      list_of_words.append(item)
    
-   word_to_symbol = {
-      "plus": "+",
-      "minus": "-",
-      "times": "*",
-      "divided by": "/"
-   }
-   
-   tokens = [word_to_symbol.get(token, token) for token in tokens]
-   expression = "".join(tokens)
-   return expression
+   number_of_operations = 1
+   for i in range(len(list_of_words)):
+      if list_of_words[i] in math_operations:
+         if number_of_operations == 1:
+            expression += f"{list_of_words[i - 1]} {list_of_words[i]} {list_of_words[i + 1]}"
+            number_of_operations += 1
+         else:
+            expression += f" {list_of_words[i]} {list_of_words[i + 1]}"
+   return expression  
 
 # Funkcija za evaluiranje matematickog izraza
 def calculate_expression(expression):
    try:
+      if "x" in expression:
+         expression = expression.replace("x", "*")
       result = eval(expression)
       return result
    except Exception as e:
-      return str(e)
+      return "I can't evaluate given expression. "
    
 # Main
 def main():
@@ -146,8 +150,8 @@ def main():
          if tag == "mathematical_expression":
             expression = text_to_expression(command)
             result = calculate_expression(expression)
+            print(f"Bot: Answer is {result}")
             speak(f"Answer is {result}")
-            print(f"Answer is {result}")
             
          # ODE NASTAVIT DODAVAT UVJETE A GORE DEFINIRAT VISE FUNKCIJA KOJE IZVRSAVAJU POSLOVE-----------------------------------------------------------
       else:
