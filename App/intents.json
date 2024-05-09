@@ -65,6 +65,20 @@
        "responses": ["Happy to help!", "Any time!", "My pleasure"]
      },
      {
+      "tag": "mathematical_expression",
+      "patterns": [
+        "What is five plus two",
+        "What is five minus two",
+        "What is five times two",
+        "What is five devided by two",
+        "What is three plus one",
+        "What is seven plus four"
+      ],
+      "responses": [
+        "I'm calculating..."
+      ]
+    },
+     {
        "tag": "funny",
        "patterns": [
          "Tell me a joke!",

@@ -6,6 +6,7 @@ from nltk_utils import bag_of_words, tokenize
 import speech_recognition as sr
 import pyttsx3
 import datetime
+import re
 
 # Inicijalizacija potrebnih stvari 
 recognizer = sr.Recognizer()
@@ -58,7 +59,31 @@ def tell_current_date():
    print(f"Bot: Today is {formatted_date}")
    speak(f"Today is {formatted_date}")
    
+# Funkcija za pretvaranje teksta u matematicki izraz
+def text_to_expression(text):
+   pattern = r'(\d+|\+|\-|\*|\/)'
+   tokens = re.findall(pattern, text)
+   
+   word_to_symbol = {
+      "plus": "+",
+      "minus": "-",
+      "times": "*",
+      "divided by": "/"
+   }
+   
+   tokens = [word_to_symbol.get(token, token) for token in tokens]
+   expression = "".join(tokens)
+   return expression
 
+# Funkcija za evaluiranje matematickog izraza
+def calculate_expression(expression):
+   try:
+      result = eval(expression)
+      return result
+   except Exception as e:
+      return str(e)
+   
+# Main
 def main():
    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -118,6 +143,12 @@ def main():
             tell_day_of_week()
          if tag == "current_date":
             tell_current_date()
+         if tag == "mathematical_expression":
+            expression = text_to_expression(command)
+            result = calculate_expression(expression)
+            speak(f"Answer is {result}")
+            print(f"Answer is {result}")
+            
          # ODE NASTAVIT DODAVAT UVJETE A GORE DEFINIRAT VISE FUNKCIJA KOJE IZVRSAVAJU POSLOVE-----------------------------------------------------------
       else:
          print(f"{bot_name}: I do not understand...")     
