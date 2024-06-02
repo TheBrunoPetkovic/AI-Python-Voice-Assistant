@@ -1,0 +1,71 @@
+cities_start
+zagreb
+split
+rijeka
+osijek
+zadar
+pula
+slavonski brod
+karlovac
+varaždin
+dubrovnik
+bjelovar
+sisak
+vinkovci
+vukovar
+koprivnica
+krapina
+new york
+los angeles
+london
+paris
+tokyo
+beijing
+moscow
+sydney
+dubai
+berlin
+toronto
+rome
+buenos aires
+sao paulo
+mexico city
+shanghai
+seoul
+hong kong
+bangkok
+singapore
+istanbul
+cairo
+delhi
+mumbai
+jakarta
+lagos
+nairobi
+johannesburg
+madrid
+barcelona
+lisbon
+vienna
+stockholm
+oslo
+helsinki
+zurich
+brussels
+amsterdam
+athens
+warsaw
+prague
+budapest
+bucharest
+kiev
+minsk
+belgrade
+sofia
+tirana
+sarajevo
+ljubljana
+cities_end
+todo_list_start
+wash dishes
+todo_list_end

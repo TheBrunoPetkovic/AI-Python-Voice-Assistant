@@ -7,6 +7,7 @@ import speech_recognition as sr
 import pyttsx3
 import datetime
 import re
+import requests
 
 # Inicijalizacija potrebnih stvari 
 recognizer = sr.Recognizer()
@@ -86,7 +87,101 @@ def calculate_expression(expression):
       return result
    except Exception as e:
       return "I can't evaluate given expression. "
-   
+
+# Funkcija koja preko api-ja dobiva trenutacno vrijeme za odredenu lokaciju   
+def weather(command, cities):
+   for item in command:
+      if item in cities:
+         city = item
+         api_key = "c1b43faadfa3a47944288472fb0a96cf"
+         url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+         response = requests.get(url)
+         weather_data = response.json()
+         if "cod" in weather_data or weather_data["cod"] == "404":
+            print("Bot: Error fetching weather provider server.")
+            speak("Error fetching weather provider server.")
+            break
+
+         temperature_kelvin = weather_data["main"]["temp"]
+         temperature_celsius = round(temperature_kelvin - 272.15, 2)
+         wind_speed = weather_data["wind"]["speed"]
+         sky_condition = weather_data["weather"][0]["id"]
+         humidity = weather_data["main"]["humidity"]
+
+         if sky_condition >= 200 and sky_condition <= 499:
+            print("Bot: It is raining a little bit. I would cover my head.")
+            speak("It is raining a little bit. I would cover my head.")
+         elif sky_condition >= 500 and sky_condition <= 599:
+            print("Bot: Weather is rainy. I would take an umbrella.")
+            speak("Weather is rainy. I would take an umbrella.")
+         elif sky_condition >= 600 and sky_condition <= 699:
+            print("Bot: Weather is snowy.")
+            speak("Weather is snowy.")
+         elif sky_condition >= 801 and sky_condition <= 899:
+            print("Bot: Weather is cloudy.")
+            speak("Weather is cloudy.")
+         elif sky_condition == 800:
+            print("Bot: Weather is clear.")
+            speak("Weather is clear.")
+         else:
+            print("Bot: Weather is undefined.")
+            speak("Weather is undefined.")
+         
+         print(f"Bot: Temperature is {temperature_celsius} degrees Celsius.")
+         speak(f"Temperature is {temperature_celsius} degrees Celsius.")
+
+         print(f"Bot: Wind speed is {wind_speed} km/h.")
+         speak(f"Wind speed is {wind_speed} km/h.")
+
+         print(f"Bot: Humidity is {humidity}.")
+         speak(f"Humidity is {humidity}.")
+
+def read_todo_list():
+   with open("data.txt", "r") as file:
+      todo_list = []
+      current_line = file.readline().strip("\n")
+      while(current_line != "todo_list_start"):
+         current_line = file.readline().strip("\n")
+      current_line = file.readline().strip("\n")
+      while(current_line != "todo_list_end"):
+         todo_list.append(current_line)
+         current_line = file.readline().strip("\n")
+   return todo_list
+
+def add_item_to_todo_list(task):
+   todo_list = read_todo_list()
+   todo_list.append(task)
+   with open("data.txt", "r") as file:
+      lines = file.readlines()
+   todo_list_end_index = lines.index("todo_list_end\n")
+   del lines[todo_list_end_index:]
+   lines.append(f"{task}\n")
+   lines.append("todo_list_end\n")
+   with open('data.txt', 'w') as file:
+      file.writelines(lines)
+
+def remove_item_from_todo_list(task):
+   pass
+
+def find_task_in_command_add(raw_command):
+   words_in_command = raw_command.split()
+   index_of_add = words_in_command.index("add") if "add" in words_in_command else 0
+   index_of_to = words_in_command.index("to") if "to" in words_in_command else 0
+   index_of_called = words_in_command.index("called") if "called" in words_in_command else 0
+   if index_of_called and index_of_called > index_of_to:
+      task = words_in_command[index_of_called + 1:]
+      task = " ".join(task)
+   elif index_of_called and index_of_called < index_of_to: 
+      task = words_in_command[index_of_called + 1:index_of_to]
+      task = " ".join(task)
+   else:
+      task = words_in_command[index_of_add + 1:index_of_to]
+      task = " ".join(task)
+   return task
+
+def find_task_in_command_remove(raw_command):
+   pass
+
 # Main
 def main():
    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -120,6 +215,7 @@ def main():
       if command is None:
          continue
       
+      raw_command = command
       command = tokenize(command)
       X = bag_of_words(command, all_words)
       X = X.reshape(1, X.shape[0])
@@ -152,7 +248,29 @@ def main():
             result = calculate_expression(expression)
             print(f"Bot: Answer is {result}")
             speak(f"Answer is {result}")
-            
+         if tag == "weather":
+            with open("data.txt", "r") as file:
+               cities = []
+               current_line = file.readline().strip("\n")
+               while(current_line != "cities_end"):
+                  cities.append(current_line)
+                  current_line = file.readline().strip("\n")
+            weather(command, cities)
+         if tag == "read_todo_list":
+            todo_list = read_todo_list()
+            print(f"Bot: {", ".join(todo_list)}.")
+            for item in todo_list:
+               speak(item)
+         if tag == "add_item_to_todo_list":
+            task = find_task_in_command_add(raw_command)
+            add_item_to_todo_list(task)
+         if tag == "remove_item_from_todo_list":
+            task = find_task_in_command_remove(raw_command)
+            remove_item_from_todo_list(task)
+            #DOVRSIT OVO 
+
+
+
          # ODE NASTAVIT DODAVAT UVJETE A GORE DEFINIRAT VISE FUNKCIJA KOJE IZVRSAVAJU POSLOVE-----------------------------------------------------------
       else:
          print(f"{bot_name}: I do not understand...")     

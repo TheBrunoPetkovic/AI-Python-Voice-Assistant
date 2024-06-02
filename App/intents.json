@@ -98,6 +98,50 @@
          "I'm trying to organize a hide and seek tournament, but it's hard to find good players.",
          "What do you get when you cross a snowman and a vampire? Frostbite."
        ]
-     }
+     },
+     {
+      "tag": "weather",
+      "patterns": [
+        "What is the weather like today",
+        "What is the weather like",
+        "Can you tell me how it the weather",
+        "Is it raining",
+        "Is it sunny",
+        "Is it cloudy"
+      ],
+      "responses": [
+        "Let me check"
+      ]
+    },
+    {
+      "tag": "read_todo_list",
+      "patterns": [
+        "Read me my to-do list",
+        "What is on my to-do list"
+      ],
+      "responses": [
+        "I will read your to-do list"
+      ]
+    },
+    {
+      "tag": "add_item_to_todo_list",
+      "patterns": [
+        "Add shopping to my todo list",
+        "Can you add study math to my to-do list"
+      ],
+      "responses": [
+        "I will add new task to your to-do list"
+      ]
+    },
+    {
+      "tag": "remove_item_from_todo_list",
+      "patterns": [
+        "Remove shopping from my to-do list",
+        "Can you remove study math from my to-do list"
+      ],
+      "responses": [
+        "I will remove that task from your to-do list"
+      ]
+    }
    ]
  }
