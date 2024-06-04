@@ -90,23 +90,24 @@ def calculate_expression(expression):
 
 # Funkcija koja preko api-ja dobiva trenutacno vrijeme za odredenu lokaciju   
 def weather(command, cities):
-   for item in command:
-      if item in cities:
-         city = item
-         api_key = "c1b43faadfa3a47944288472fb0a96cf"
-         url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
-         response = requests.get(url)
-         weather_data = response.json()
-         if "cod" in weather_data or weather_data["cod"] == "404":
-            print("Bot: Error fetching weather provider server.")
-            speak("Error fetching weather provider server.")
-            break
+   for city in cities:
+      if city in command:
+         try:
+            city_search = city
+            api_key = "c1b43faadfa3a47944288472fb0a96cf"
+            url = f"http://api.openweathermap.org/data/2.5/weather?q={city_search}&appid={api_key}"
+            response = requests.get(url)
+            weather_data = response.json()
 
-         temperature_kelvin = weather_data["main"]["temp"]
-         temperature_celsius = round(temperature_kelvin - 272.15, 2)
-         wind_speed = weather_data["wind"]["speed"]
-         sky_condition = weather_data["weather"][0]["id"]
-         humidity = weather_data["main"]["humidity"]
+            temperature_kelvin = weather_data["main"]["temp"]
+            temperature_celsius = round(temperature_kelvin - 272.15, 2)
+            wind_speed = weather_data["wind"]["speed"]
+            sky_condition = weather_data["weather"][0]["id"]
+            humidity = weather_data["main"]["humidity"]
+         except Exception  as e:
+            print("Bot: Something went wrong.")
+            speak("Something went wrong.")
+            break
 
          if sky_condition >= 200 and sky_condition <= 499:
             print("Bot: It is raining a little bit. I would cover my head.")
@@ -133,8 +134,8 @@ def weather(command, cities):
          print(f"Bot: Wind speed is {wind_speed} km/h.")
          speak(f"Wind speed is {wind_speed} km/h.")
 
-         print(f"Bot: Humidity is {humidity}.")
-         speak(f"Humidity is {humidity}.")
+         print(f"Bot: Humidity is {humidity}%.")
+         speak(f"Humidity is {humidity}%.")
 
 def read_todo_list():
    with open("data.txt", "r") as file:
@@ -255,7 +256,7 @@ def main():
                while(current_line != "cities_end"):
                   cities.append(current_line)
                   current_line = file.readline().strip("\n")
-            weather(command, cities)
+            weather(raw_command, cities)
          if tag == "read_todo_list":
             todo_list = read_todo_list()
             print(f"Bot: {", ".join(todo_list)}.")
@@ -268,6 +269,8 @@ def main():
             task = find_task_in_command_remove(raw_command)
             remove_item_from_todo_list(task)
             #DOVRSIT OVO 
+
+
 
 
 
