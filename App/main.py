@@ -94,7 +94,7 @@ def weather(command, cities):
       if city in command:
          try:
             city_search = city
-            api_key = "c1b43faadfa3a47944288472fb0a96cf"
+            api_key = "your_weather_api_key_from_openweather.org"
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city_search}&appid={api_key}"
             response = requests.get(url)
             weather_data = response.json()
